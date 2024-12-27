@@ -15,7 +15,7 @@ bot.onText(/(.+)/, (msg, match) => {
     const totalIncomeRegex = /^tổng thu$/i; // Tổng thu
 
     if (totalExpenseRegex.test(text)) {
-        const url = new URL(process.env.WEBHOOK_URL_v2);
+        const url = new URL(process.env.WEBHOOK_URL_V2);
         url.searchParams.append('action', 'getMonthlyTotal');
 
         fetch(url)
@@ -36,7 +36,7 @@ bot.onText(/(.+)/, (msg, match) => {
     }
 
     if (totalIncomeRegex.test(text)) {
-        const url = new URL(process.env.WEBHOOK_URL_v2);
+        const url = new URL(process.env.WEBHOOK_URL_V2);
         url.searchParams.append('action', 'getMonthlyIncome');
 
         fetch(url)
