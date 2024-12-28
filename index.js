@@ -4,6 +4,18 @@ import 'dotenv/config';
 
 const bot = new TelegramBot(process.env.BOT_TOKEN, { polling: true });
 
+// Chào mừng người dùng khi họ gửi tin nhắn đầu tiên
+bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+    const userName = msg.from.first_name || 'bạn';
+    bot.sendMessage(
+        chatId,
+        `Xin chào, ${userName}! 👋\nChào mừng bạn đến với bot quản lý tài chính cá nhân.\n\nBạn có thể sử dụng các lệnh sau:\n- Ghi chi tiêu: \`15k ăn sáng\`\n- Ghi thu nhập: \`+7 triệu tiền lương\`\n- Xem tổng chi: \`tổng chi\`\n- Xem tổng thu: \`tổng thu\`\n- Xem số tiền còn lại: \`tổng còn lại\`\n\nHãy bắt đầu quản lý tài chính ngay nào! 🚀`,
+        { parse_mode: 'Markdown' }
+    );
+});
+
+// Nhận diện các lệnh
 bot.onText(/(.+)/, (msg, match) => {
     const chatId = msg.chat.id;
     const text = match[1].trim();
