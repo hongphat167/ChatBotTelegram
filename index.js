@@ -215,3 +215,17 @@ bot.onText(/(.+)/, (msg, match) => {
 });
 
 console.log('Bot is running...');
+import express from 'express';
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Endpoint để kiểm tra trạng thái ứng dụng
+app.get('/', (req, res) => {
+    res.send('Bot is running!');
+});
+
+// Máy chủ HTTP lắng nghe
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
