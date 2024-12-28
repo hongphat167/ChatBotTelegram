@@ -50,6 +50,7 @@ const sendInlineKeyboard = (chatId) => {
 const callApi = async (url) => {
     try {
         const res = await fetch(url);
+        console.log('API Response:', JSON.stringify(res, null, 2)); // Log response từ API
         return await res.json();
     } catch (err) {
         throw new Error('API call failed');
@@ -79,6 +80,7 @@ const handleTransaction = async (chatId, type, amount, note, timestamp) => {
 
     try {
         const data = await callApi(url);
+        console.log('Transaction Response:', data);
         if (data.status === 'success') {
             bot.sendMessage(
                 chatId,
@@ -98,6 +100,7 @@ const handleTransaction = async (chatId, type, amount, note, timestamp) => {
 const handleSummary = async (chatId, action) => {
     try {
         const url = new URL(process.env.WEBHOOK_URL_V2);
+        console.log(`Handle Summary Action: ${action}`);
         if (action === 'totalExpense') {
             url.searchParams.append('action', 'getMonthlyTotal');
             const data = await callApi(url);
@@ -123,6 +126,8 @@ const handleSummary = async (chatId, action) => {
             incomeUrl.searchParams.append('action', 'getMonthlyIncome');
 
             const [expenseData, incomeData] = await Promise.all([callApi(expenseUrl), callApi(incomeUrl)]);
+            console.log('Total Remaining - Expense Response:', expenseData); // Log expense data
+            console.log('Total Remaining - Income Response:', incomeData); // Log income data
 
             if (
                 expenseData.status === 'success' &&
@@ -156,7 +161,7 @@ bot.on('callback_query', async (callbackQuery) => {
             url.searchParams.append('action', 'deleteAllData');
 
             const data = await callApi(url);
-
+            console.log('Delete All Data Response:', data); // Log response từ API
             if (data.status === 'success') {
                 bot.sendMessage(chatId, '🗑️ *Dữ liệu đã được xóa thành công!* 🚀', { parse_mode: 'Markdown' });
             } else {
