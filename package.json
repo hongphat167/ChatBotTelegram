@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Telegram to Google Sheets",
   "main": "index.js",
+  "engines": {
+    "node": "20.x"
+  },
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -14,7 +17,7 @@
     "bot",
     "webhook"
   ],
-  "author": "JUNO_OKYO",
+  "author": "Phat_THH",
   "license": "MIT",
   "devDependencies": {
     "dotenv": "^16.3.1",
