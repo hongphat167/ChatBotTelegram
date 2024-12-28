@@ -63,7 +63,7 @@ bot.on('message', (msg) => {
         const userName = msg.from.first_name || 'bạn';
         bot.sendMessage(
             chatId,
-            `🎉 *Xin chào, ${userName}!*\n\nChào mừng bạn đến với bot quản lý tài chính cá nhân. 🏦\n\nBạn có thể sử dụng các lệnh sau:\n- 📌 Ghi chi tiêu: \`15k ăn sáng\`\n- 📌 Ghi thu nhập: \`+7 triệu tiền lương\`\n- 📉 Xem tổng chi: \`tổng chi\`\n- 📈 Xem tổng thu: \`tổng thu\`\n- 💰 Xem số tiền còn lại: \`tổng còn lại\`\n\nHãy bắt đầu quản lý tài chính của bạn ngay hôm nay nhé! 🚀`,
+            `🎉 *Xin chào, ${userName}!*\n\nChào mừng bạn đến với bot quản lý tài chính cá nhân. 🏦\n\nBạn có thể sử dụng các lệnh sau:\n- 📌 Ghi chi tiêu: \`15k ăn sáng\`\n- 📌 Ghi thu nhập: \`+7triệu tiền lương\`\n- 📉 Xem tổng chi: \`tổng chi\`\n- 📈 Xem tổng thu: \`tổng thu\`\n- 💰 Xem số tiền còn lại: \`tổng còn lại\`\n\nHãy bắt đầu quản lý tài chính của bạn ngay hôm nay nhé! 🚀`,
             { parse_mode: 'Markdown' }
         );
     }
@@ -208,7 +208,7 @@ bot.onText(/(.+)/, (msg, match) => {
     } else {
         bot.sendMessage(
             chatId,
-            '❌ *Cú pháp không hợp lệ!*\n\n📝 *Ví dụ:*\n- `15k ăn sáng` (tiền ra)\n- `+7 triệu tiền lương` (tiền vào)\n- `tổng chi` (tính tổng chi tiêu)\n- `tổng thu` (tính tổng thu nhập)\n- `tổng còn lại` (tính tổng số tiền còn lại)',
+            '❌ *Cú pháp không hợp lệ!*\n\n📝 *Ví dụ:*\n- `15k ăn sáng` (tiền ra)\n- `+7triệu tiền lương` (tiền vào)\n- `tổng chi` (tính tổng chi tiêu)\n- `tổng thu` (tính tổng thu nhập)\n- `tổng còn lại` (tính tổng số tiền còn lại)',
             { parse_mode: 'Markdown' }
         );
     }
