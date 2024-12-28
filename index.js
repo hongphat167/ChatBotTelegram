@@ -181,6 +181,10 @@ bot.onText(/(.+)/, (msg, match) => {
     const totalIncomeRegex = /^tổng thu$/i; // Tổng thu
     const totalRemainingRegex = /^tổng còn lại$/i; // Tổng còn lại
 
+    if (text === '/start') {
+        return;
+    }
+
     if (totalExpenseRegex.test(text)) {
         handleSummary(chatId, 'totalExpense');
     } else if (totalIncomeRegex.test(text)) {
