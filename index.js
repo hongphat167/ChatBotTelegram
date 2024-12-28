@@ -56,6 +56,19 @@ const callApi = async (url) => {
     }
 };
 
+// Xử lý tin nhắn chào mừng khi lệnh `/start` được gửi
+bot.on('message', (msg) => {
+    const chatId = msg.chat.id;
+    if (msg.text === '/start') {
+        const userName = msg.from.first_name || 'bạn';
+        bot.sendMessage(
+            chatId,
+            `🎉 *Xin chào, ${userName}!*\n\nChào mừng bạn đến với bot quản lý tài chính cá nhân. 🏦\n\nBạn có thể sử dụng các lệnh sau:\n- 📌 Ghi chi tiêu: \`15k ăn sáng\`\n- 📌 Ghi thu nhập: \`+7 triệu tiền lương\`\n- 📉 Xem tổng chi: \`tổng chi\`\n- 📈 Xem tổng thu: \`tổng thu\`\n- 💰 Xem số tiền còn lại: \`tổng còn lại\`\n\nHãy bắt đầu quản lý tài chính của bạn ngay hôm nay nhé! 🚀`,
+            { parse_mode: 'Markdown' }
+        );
+    }
+});
+
 // Hàm xử lý giao dịch (Tiền vào/Tiền ra)
 const handleTransaction = async (chatId, type, amount, note, timestamp) => {
     const url = new URL(process.env.WEBHOOK_URL);
@@ -189,11 +202,13 @@ bot.onText(/(.+)/, (msg, match) => {
 
         handleTransaction(chatId, 'Tiền vào', parseAmount(amount), note, timestamp);
     } else {
-        bot.sendMessage(
-            chatId,
-            '❌ *Cú pháp không hợp lệ!*\n\n📝 *Ví dụ:*\n- `15k ăn sáng` (tiền ra)\n- `+7 triệu tiền lương` (tiền vào)\n- `tổng chi` (tính tổng chi tiêu)\n- `tổng thu` (tính tổng thu nhập)\n- `tổng còn lại` (tính tổng số tiền còn lại)',
-            { parse_mode: 'Markdown' }
-        );
+        if (!'/start'.test(text)) {
+            bot.sendMessage(
+                chatId,
+                '❌ *Cú pháp không hợp lệ!*\n\n📝 *Ví dụ:*\n- `15k ăn sáng` (tiền ra)\n- `+7 triệu tiền lương` (tiền vào)\n- `tổng chi` (tính tổng chi tiêu)\n- `tổng thu` (tính tổng thu nhập)\n- `tổng còn lại` (tính tổng số tiền còn lại)',
+                { parse_mode: 'Markdown' }
+            );
+        }
     }
 });
 
