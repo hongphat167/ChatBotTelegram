@@ -9,10 +9,11 @@ bot.onText(/(.+)/, (msg, match) => {
     const text = match[1].trim();
 
     // Regex to identify "tiền ra" (e.g., 15k ăn sáng), "tiền vào" (e.g., +7 triệu tiền lương), "tổng chi", and "tổng thu"
-    const expenseRegex = /^([\d,.]+[kK]?\s+.+)$/; // Tiền ra
+    const expenseRegex =  /^([\d,.]+(?:k|K|triệu|TRIỆU)?\s+.+)$/;  // Tiền ra
     const incomeRegex = /^\+([\d,.]+(?:k|K|triệu|TRIỆU)?\s+.+)$/; // Tiền vào
     const totalExpenseRegex = /^tổng chi$/i; // Tổng chi
     const totalIncomeRegex = /^tổng thu$/i; // Tổng thu
+
 
     if (totalExpenseRegex.test(text)) {
         const url = new URL(process.env.WEBHOOK_URL_V2);
