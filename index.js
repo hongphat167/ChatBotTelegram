@@ -202,13 +202,11 @@ bot.onText(/(.+)/, (msg, match) => {
 
         handleTransaction(chatId, 'Tiền vào', parseAmount(amount), note, timestamp);
     } else {
-        if (!'/start'.test(text)) {
-            bot.sendMessage(
-                chatId,
-                '❌ *Cú pháp không hợp lệ!*\n\n📝 *Ví dụ:*\n- `15k ăn sáng` (tiền ra)\n- `+7 triệu tiền lương` (tiền vào)\n- `tổng chi` (tính tổng chi tiêu)\n- `tổng thu` (tính tổng thu nhập)\n- `tổng còn lại` (tính tổng số tiền còn lại)',
-                { parse_mode: 'Markdown' }
-            );
-        }
+        bot.sendMessage(
+            chatId,
+            '❌ *Cú pháp không hợp lệ!*\n\n📝 *Ví dụ:*\n- `15k ăn sáng` (tiền ra)\n- `+7 triệu tiền lương` (tiền vào)\n- `tổng chi` (tính tổng chi tiêu)\n- `tổng thu` (tính tổng thu nhập)\n- `tổng còn lại` (tính tổng số tiền còn lại)',
+            { parse_mode: 'Markdown' }
+        );
     }
 });
 
