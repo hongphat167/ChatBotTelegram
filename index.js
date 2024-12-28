@@ -31,6 +31,9 @@ const sendInlineKeyboard = (chatId) => {
                 ],
                 [
                     { text: '💰 Tổng còn lại', callback_data: 'totalRemaining' }
+                ],
+                [
+                    { text: '🗑️ Xóa dữ liệu', callback_data: 'deleteAllData' }
                 ]
             ]
         }
@@ -38,7 +41,7 @@ const sendInlineKeyboard = (chatId) => {
 
     bot.sendMessage(
         chatId,
-        '🎯 *Bạn muốn xem gì tiếp theo?* Hãy chọn một trong các mục bên dưới nhé! 👇',
+        '🎯 *Bạn muốn làm gì tiếp theo?* Hãy chọn một trong các mục bên dưới nhé! 👇',
         { parse_mode: 'Markdown', ...options }
     );
 };
@@ -129,6 +132,31 @@ const handleSummary = async (chatId, action) => {
     }
 };
 
+// Xử lý nút bấm
+bot.on('callback_query', async (callbackQuery) => {
+    const chatId = callbackQuery.message.chat.id;
+    const action = callbackQuery.data;
+
+    if (action === 'deleteAllData') {
+        try {
+            const url = new URL(process.env.WEBHOOK_URL_V2);
+            url.searchParams.append('action', 'deleteAllData');
+
+            const data = await callApi(url);
+
+            if (data.status === 'success') {
+                bot.sendMessage(chatId, '🗑️ *Dữ liệu đã được xóa thành công!* 🚀', { parse_mode: 'Markdown' });
+            } else {
+                bot.sendMessage(chatId, `❌ Không thể xóa dữ liệu. Phản hồi từ server: *${data.message || 'Unknown error'}*`, { parse_mode: 'Markdown' });
+            }
+        } catch (err) {
+            sendErrorMessage(chatId, err);
+        }
+    } else {
+        handleSummary(chatId, action);
+    }
+});
+
 // Xử lý lệnh nhập của người dùng
 bot.onText(/(.+)/, (msg, match) => {
     const chatId = msg.chat.id;
@@ -167,14 +195,6 @@ bot.onText(/(.+)/, (msg, match) => {
             { parse_mode: 'Markdown' }
         );
     }
-});
-
-// Xử lý nút bấm
-bot.on('callback_query', (callbackQuery) => {
-    const chatId = callbackQuery.message.chat.id;
-    const action = callbackQuery.data;
-
-    handleSummary(chatId, action);
 });
 
 console.log('Bot is running...');
